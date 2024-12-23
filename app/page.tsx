@@ -1,101 +1,58 @@
-import Image from "next/image";
+import React from 'react';
 
-export default function Home() {
+interface UmbrellaCardProps {
+  id: number;
+  status: '가능' | '불가능';
+  startDate: string;
+  endDate: string;
+  isRenting?: boolean;
+}
+
+const UmbrellaCard: React.FC<UmbrellaCardProps> = ({ id, status, startDate, endDate, isRenting }) => {
+  const backgroundColor = isRenting ? '#FFE5E5' : '#F7F7F7';
+  
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <div className="p-6 rounded-[12px] w-full max-w-[380px] h-[280px] flex flex-col justify-between" style={{ backgroundColor }}>
+      <div className="text-[18px] font-bold text-[#4B8BF5] mt-6">우산 {id}</div>
+      <div className="text-[32px] font-semibold text-[#000000] mb-0">대여 {status}</div> 
+      <div className="text-[20px] font-Medium text-[#C2C2C2] mb-20">
+        {isRenting ? '대여 중 | ' : ''}{startDate} ~ {endDate}
+      </div>
+      <div className="flex justify-end -mt-2">
+        <button className="bg-white px-4 py-2 rounded-md text-gray-700 w-[127px] h-[39px]">
+          대여하기
+        </button>
+      </div>
+    </div>
+  );
+};
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+export default function Page() {
+  const umbrellas = [
+    { id: 1, status: '가능', startDate: '24.12.21', endDate: '24.12.24' },
+    { id: 2, status: '가능', startDate: '24.12.21', endDate: '24.12.24' },
+    { id: 3, status: '가능', startDate: '24.12.21', endDate: '24.12.24' },
+    { id: 4, status: '가능', startDate: '24.12.21', endDate: '24.12.24' },
+    { id: 5, status: '불가능', startDate: '24.12.21', endDate: '24.12.24', isRenting: true },
+    { id: 6, status: '가능', startDate: '24.12.21', endDate: '24.12.24' },
+  ];
+
+  return (
+    <div className="min-h-screen bg-white flex items-center">
+      <div className="container mx-auto p-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 justify-items-center"> 
+          {umbrellas.map((umbrella) => (
+            <UmbrellaCard
+              key={umbrella.id}
+              id={umbrella.id}
+              status={umbrella.status as '가능' | '불가능'}
+              startDate={umbrella.startDate}
+              endDate={umbrella.endDate}
+              isRenting={umbrella.isRenting}
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+          ))}
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </div>
     </div>
   );
 }
