@@ -1,4 +1,5 @@
 import React from 'react';
+import Header from '../app/components/Header/page';
 
 interface UmbrellaCardProps {
   id: number;
@@ -38,19 +39,22 @@ export default function Page() {
   ];
 
   return (
-    <div className="min-h-screen bg-white flex items-center">
-      <div className="container mx-auto p-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 justify-items-center"> 
-          {umbrellas.map((umbrella) => (
-            <UmbrellaCard
-              key={umbrella.id}
-              id={umbrella.id}
-              status={umbrella.status as '가능' | '불가능'}
-              startDate={umbrella.startDate}
-              endDate={umbrella.endDate}
-              isRenting={umbrella.isRenting}
-            />
-          ))}
+    <div className="min-h-screen bg-white flex flex-col">
+      <Header />
+      <div className="flex-grow">
+        <div className="container mx-auto p-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 justify-items-center"> 
+            {umbrellas.map((umbrella) => (
+              <UmbrellaCard
+                key={umbrella.id}
+                id={umbrella.id}
+                status={umbrella.status as '가능' | '불가능'}
+                startDate={umbrella.startDate}
+                endDate={umbrella.endDate}
+                isRenting={umbrella.isRenting}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </div>
