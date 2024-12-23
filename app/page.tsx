@@ -13,14 +13,14 @@ const UmbrellaCard: React.FC<UmbrellaCardProps> = ({ id, status, startDate, endD
   const backgroundColor = isRenting ? '#FFE5E5' : '#F7F7F7';
   
   return (
-    <div className="p-6 rounded-[12px] w-full max-w-[380px] h-[280px] flex flex-col justify-between" style={{ backgroundColor }}>
-      <div className="text-[18px] font-bold text-[#4B8BF5] mt-6">우산 {id}</div>
-      <div className="text-[32px] font-semibold text-[#000000] mb-0">대여 {status}</div> 
-      <div className="text-[20px] font-Medium text-[#C2C2C2] mb-20">
+    <div className="p-6 rounded-[12px] w-full h-[280px] flex flex-col justify-between" style={{ backgroundColor }}>
+      <div className="text-[18px] font-bold text-[#4B8BF5] mt-6 font-sans">우산 {id}</div>
+      <div className="text-[32px] font-semibold text-[#000000] mb-0 font-sans">대여 {status}</div> 
+      <div className="text-[20px] font-Medium text-[#C2C2C2] mb-20 font-sans">
         {isRenting ? '대여 중 | ' : ''}{startDate} ~ {endDate}
       </div>
       <div className="flex justify-end -mt-2">
-        <button className="bg-white px-4 py-2 rounded-md text-gray-700 w-[127px] h-[39px]">
+        <button className="bg-white px-4 py-2 rounded-md text-[#000000] font-semibold w-[127px] h-[39px]">
           대여하기
         </button>
       </div>
@@ -39,11 +39,11 @@ export default function Page() {
   ];
 
   return (
-    <div className="min-h-screen bg-white flex flex-col">
+    <div className="min-h-screen bg-white flex flex-col font-sans"> 
       <Header />
-      <div className="flex-grow">
-        <div className="container mx-auto p-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 justify-items-center"> 
+      <div className="flex-grow mt-[70px]"> 
+        <div className="container mx-auto px-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {umbrellas.map((umbrella) => (
               <UmbrellaCard
                 key={umbrella.id}
