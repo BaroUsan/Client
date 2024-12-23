@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from './Header/page';
+import Image from 'next/image';
 
 interface UmbrellaCardProps {
   id: number;
@@ -10,14 +11,19 @@ interface UmbrellaCardProps {
 }
 
 const UmbrellaCard: React.FC<UmbrellaCardProps> = ({ id, status, startDate, endDate, isRenting }) => {
-  const backgroundColor = isRenting ? '#FFE5E5' : '#F7F7F7';
+  const backgroundColor = isRenting ? '#FFE5E5' : '#F6FFF8';
   
   return (
     <div className="p-6 rounded-[12px] w-full h-[280px] flex flex-col justify-between" style={{ backgroundColor }}>
-      <div className="text-[18px] font-bold text-[#4B8BF5] mt-6 font-sans">우산 {id}</div>
-      <div className="text-[32px] font-semibold text-[#000000] mb-0 font-sans">대여 {status}</div> 
-      <div className="text-[20px] font-Medium text-[#878787] mb-20 font-sans">
-        {isRenting ? '대여 중: ' : ''}{startDate} ~ {endDate}
+      <div className="flex justify-between">
+        <div>
+          <div className="text-[18px] font-bold text-[#4B8BF5] mt-6 font-sans">우산 {id}</div>
+          <div className="text-[32px] font-semibold text-[#000000] mb-0 font-sans">대여 {status}</div> 
+          <div className="text-[20px] font-Medium text-[#878787] mb-20 font-sans">
+            {isRenting ? '대여 중: ' : ''}{startDate} ~ {endDate}
+          </div>
+        </div>
+        <span className="text-[68px]">{isRenting ? '🌂' : '☂'}</span>
       </div>
       <div className="flex justify-end -mt-2">
         <button className="bg-white px-4 py-2 rounded-md text-[#000000] font-semibold w-[127px] h-[39px]">
@@ -43,6 +49,10 @@ export default function Page() {
       <Header />
       <div className="flex-grow mt-[70px]"> 
         <div className="container mx-auto px-6">
+          <div className="mb-4">
+            <Image src="/logo.svg" alt="Logo" width={120} height={36} />
+            <p className="text-[#878787] mt-2">우산이 필요한 날 우산을 대여해보세요.</p>
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {umbrellas.map((umbrella) => (
               <UmbrellaCard
@@ -55,6 +65,9 @@ export default function Page() {
               />
             ))}
           </div>
+          <p className="text-[#878787] text-center mt-8">
+            대여 기간은 3일입니다. 3일내로 반납해주세요.
+          </p>
         </div>
       </div>
     </div>
