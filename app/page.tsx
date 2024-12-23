@@ -16,7 +16,7 @@ const UmbrellaCard: React.FC<UmbrellaCardProps> = ({ id, status, startDate, endD
     <div className="p-6 rounded-[12px] w-full h-[280px] flex flex-col justify-between" style={{ backgroundColor }}>
       <div className="text-[18px] font-bold text-[#4B8BF5] mt-6 font-sans">우산 {id}</div>
       <div className="text-[32px] font-semibold text-[#000000] mb-0 font-sans">대여 {status}</div> 
-      <div className="text-[20px] font-Medium text-[#C2C2C2] mb-20 font-sans">
+      <div className="text-[20px] font-Medium text-[#878787] mb-20 font-sans"> {/* 색상 변경 */}
         {isRenting ? '대여 중 | ' : ''}{startDate} ~ {endDate}
       </div>
       <div className="flex justify-end -mt-2">
