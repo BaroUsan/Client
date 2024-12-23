@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from '../app/components/Header/page';
+import Header from './Header/page';
 
 interface UmbrellaCardProps {
   id: number;
