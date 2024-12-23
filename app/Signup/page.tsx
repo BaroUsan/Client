@@ -15,10 +15,8 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-white text-gray-800 flex flex-col">
-      {/* Header는 최상단에 배치 */}
       <Header />
       
-      {/* 로그인 폼 */}
       <div className="flex flex-grow flex-col items-center justify-center px-4">
         <h1 className="text-4xl font-semibold mb-10">회원가입</h1>
         
