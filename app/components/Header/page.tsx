@@ -2,7 +2,7 @@ import React from 'react';
 
 const Header: React.FC = () => {
   return (
-    <header className="flex items-center justify-between p-4 bg-white shadow-none"> 
+    <header className="flex items-center justify-between p-4 bg-white shadow-none border-b border-[#EBEBEB]"> {/* 아래 선 추가 */}
       <div className="flex items-center ml-[150px] mt-[10px]"> 
         <h1 className="text-2xl font-bold text-blue-600">바로우산</h1>
       </div>
