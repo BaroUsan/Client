@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { Search, Send } from 'lucide-react';
 import Header from '../Header/page'; 
+import Image from 'next/image';
 
 interface Message {
   id: number;
@@ -71,7 +72,10 @@ export default function ChatInterface() {
       <div className={`w-full max-w-3xl mx-auto h-screen flex flex-col transition-opacity duration-300 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
         {!isChatting ? (
           <div className="flex-1 flex flex-col pt-64 px-4">
-            <h1 className="text-5xl font-semibold mb-12 text-center text-black">바로우산과 대화하기</h1>
+            <div className="mb-12 text-center flex items-center justify-center">
+              <Image src="/logo.svg" alt="Logo" width={120} height={36} />
+              <span className="text-5xl font-semibold text-black">과 대화하기</span>
+            </div>
             <div className="relative mb-6">
               <input
                 type="text"
@@ -160,4 +164,4 @@ export default function ChatInterface() {
       </div>
     </div>
   );
-}``
+}
