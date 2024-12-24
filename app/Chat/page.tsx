@@ -83,7 +83,7 @@ export default function ChatInterface() {
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && handleStartChat(inputText)}
-                className="w-full p-4 pr-12 rounded-lg bg-white border border-gray-200 focus:outline-none focus:border-gray-300"
+                className="w-full p-4 pr-12 rounded-lg bg-white text-black border border-gray-200 focus:outline-none focus:border-gray-300"
               />
               <button 
                 onClick={() => handleStartChat(inputText)}
@@ -149,7 +149,7 @@ export default function ChatInterface() {
                   onChange={(e) => setInputText(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && handleSendMessage(inputText)}
                   placeholder="메세지 입력"
-                  className="w-full p-4 pr-12 rounded-lg bg-white border border-gray-200 focus:outline-none focus:border-gray-300"
+                  className="w-full p-4 pr-12 rounded-lg bg-white text-black border border-gray-200 focus:outline-none focus:border-gray-300"
                 />
                 <button
                   onClick={() => handleSendMessage(inputText)}
