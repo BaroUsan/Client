@@ -1,8 +1,18 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
 const Header: React.FC = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    // 로그인 상태 확인
+    const accessToken = localStorage.getItem('accessToken');
+    if (accessToken) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
   return (
     <header className="flex items-center justify-between p-4 bg-white shadow-none border-b border-gray-200">
       <div className="flex items-center ml-36 mt-2">
@@ -18,9 +28,11 @@ const Header: React.FC = () => {
         <Link href="/mypage" className="text-lg text-black hover:text-blue-600">
           마이페이지
         </Link>
-        <Link href="/signin" className="text-lg text-black hover:text-blue-600">
-          로그인
-        </Link>
+        {!isLoggedIn && (
+          <Link href="/signin" className="text-lg text-black hover:text-blue-600">
+            로그인
+          </Link>
+        )}
       </nav>
     </header>
   );
