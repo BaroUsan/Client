@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Header from '../Header/page';
 
@@ -8,18 +9,57 @@ export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError('');
+    setLoading(true);
+
+    try {
+      const response = await fetch(
+        'https://port-0-cloud-lylb047299de6c8f.sel5.cloudtype.app/signin',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email, password }),
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log('로그인 성공:', data);
+
+        // 엑세스 토큰, 리프레쉬 토큰 및 이메일 로컬스토리지에 저장
+        localStorage.setItem('accessToken', data.accessToken);
+        localStorage.setItem('refreshToken', data.refreshToken);
+        localStorage.setItem('userEmail', email);
+
+        // / 경로로 이동
+        router.push('/');
+      } else {
+        const errorData = await response.json();
+        setError(errorData.message || '로그인 실패. 다시 시도해주세요.');
+      }
+    } catch (err) {
+      console.error('Error:', err);
+      setError('서버에 연결할 수 없습니다. 잠시 후 다시 시도해주세요.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="min-h-screen bg-white text-gray-800 flex flex-col">
       <Header />
-      
+
       <div className="flex flex-grow flex-col items-center justify-center px-4">
         <h1 className="text-5xl font-semibold mb-12">로그인</h1>
-        
+
         <form onSubmit={handleSubmit} className="w-full max-w-md space-y-4">
           <div>
             <input
@@ -30,10 +70,10 @@ export default function LoginPage() {
               className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500 bg-white text-gray-800"
             />
           </div>
-          
+
           <div className="relative">
             <input
-              type={showPassword ? "text" : "password"}
+              type={showPassword ? 'text' : 'password'}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="비밀번호를 입력해주세요."
@@ -63,15 +103,18 @@ export default function LoginPage() {
               </svg>
             </button>
           </div>
-          
+
+          {error && <p className="text-red-500 text-sm">{error}</p>}
+
           <button
             type="submit"
             className="w-full bg-[#2D88FF] text-white py-3 rounded-lg font-medium transition-colors"
+            disabled={loading}
           >
-            로그인
+            {loading ? '로그인 중...' : '로그인'}
           </button>
         </form>
-        
+
         <div className="mt-4">
           <Link 
             href="/signup" 
