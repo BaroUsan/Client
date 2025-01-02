@@ -34,12 +34,10 @@ export default function LoginPage() {
         const data = await response.json();
         console.log('로그인 성공:', data);
 
-        // 엑세스 토큰, 리프레쉬 토큰 및 이메일 로컬스토리지에 저장
         localStorage.setItem('accessToken', data.accessToken);
         localStorage.setItem('refreshToken', data.refreshToken);
         localStorage.setItem('userEmail', email);
 
-        // / 경로로 이동
         router.push('/');
       } else {
         const errorData = await response.json();
