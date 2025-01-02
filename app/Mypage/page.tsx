@@ -1,16 +1,72 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Header from '../Header/page'; 
 
+interface UserData {
+  email: string;
+  borrowedUmbrellas: string[];
+  borrowDates: { [key: string]: string };
+  dueDates: { [key: string]: string };
+  overdueUmbrellas: string[];
+}
+
 export default function UserDashboard() {
-  const umbrellaData = [
-    { code: 2, borrowDate: '24/09/15', returnDate: '24/09/18', status: '반납' },
-    { code: 1, borrowDate: '24/10/13', returnDate: '24/10/16', status: '반납' },
-    { code: 3, borrowDate: '24/11/3', returnDate: '24/11/9', status: '연체' },
-    { code: 4, borrowDate: '24/11/15', returnDate: '24/11/18', status: '반납' },
-  ];
+  const [userData, setUserData] = useState<UserData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);  // Error 상태의 타입을 수정
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const email = localStorage.getItem('userEmail');
+      const accessToken = localStorage.getItem('accessToken');
+
+      if (!email || !accessToken) {
+        setError('로그인 정보가 없습니다. 다시 로그인해주세요.');
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const response = await fetch(`https://port-0-cloud-lylb047299de6c8f.sel5.cloudtype.app/mypage/${email}`, {
+          headers: {
+            'Authorization': `Bearer ${accessToken}`,
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          setUserData(data);
+        } else {
+          setError('사용자 정보를 가져올 수 없습니다. 다시 시도해주세요.');
+        }
+      } catch (err) {
+        setError('서버에 연결할 수 없습니다. 잠시 후 다시 시도해주세요.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return <div className="min-h-screen flex items-center justify-center">로딩 중...</div>;
+  }
+
+  if (error) {
+    return <div className="min-h-screen flex items-center justify-center text-red-500">{error}</div>;
+  }
+
+  // userData가 null이 아닌 경우만 처리
+  const umbrellaData = userData?.borrowedUmbrellas.map((code) => ({
+    code,
+    borrowDate: new Date(userData.borrowDates[code]).toLocaleDateString(),
+    returnDate: new Date(userData.dueDates[code]).toLocaleDateString(),
+    status: userData.overdueUmbrellas.includes(code) ? '연체' : '반납',
+  })) || [];
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
@@ -26,12 +82,11 @@ export default function UserDashboard() {
               className="rounded-full"
             />
             <div className="ml-4">
-              <h2 className="text-lg font-semibold text-gray-800">XXX님</h2>
-              <p className="text-sm text-gray-500">2023XXX@bssm.hs.kr</p>
+              <h2 className="text-lg font-semibold text-gray-800">{userData?.email}</h2> {/* 이메일로 변경 */}
             </div>
           </div>
           <div className="bg-blue-50 text-blue-700 text-center py-3 rounded-lg mb-6 font-semibold">
-            🔔 현재 대여 중 | 우산 코드 1 / 반납 예정일 24/12/15
+            🔔 현재 대여 중 | 우산 코드 {userData?.borrowedUmbrellas.join(', ')} / 반납 예정일 {umbrellaData.length > 0 ? umbrellaData[0].returnDate : '없음'}
           </div>
 
           <div className="w-full">
