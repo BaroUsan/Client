@@ -34,11 +34,6 @@ const UmbrellaCard: React.FC<UmbrellaCardProps> = ({ id, status, startDate, endD
         </div>
         <span className="text-[68px] font-Pretendard">{isRenting ? '🌂' : '☂'}</span>
       </div>
-      <div className="flex justify-end -mt-2">
-        <button className="bg-white px-4 py-2 rounded-md text-[#000000] font-semibold w-[127px] h-[39px] font-Pretendard">
-          대여하기
-        </button>
-      </div>
     </div>
   );
 };
@@ -95,7 +90,7 @@ export default function Page() {
               <UmbrellaCard
                 key={umbrella.id}
                 id={umbrella.id}
-                status={umbrella.status}
+                status={umbrella.status as '가능' | '불가능'}
                 startDate={umbrella.startDate}
                 endDate={umbrella.endDate}
                 isRenting={umbrella.isRenting}
