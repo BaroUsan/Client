@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import Header from '../Header/page'; 
+import Header from '../Header/page';
 
 interface UserData {
   email: string;
@@ -15,7 +15,7 @@ interface UserData {
 export default function UserDashboard() {
   const [userData, setUserData] = useState<UserData | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);  // Error 상태의 타입을 수정
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -60,7 +60,6 @@ export default function UserDashboard() {
     return <div className="min-h-screen flex items-center justify-center text-red-500">{error}</div>;
   }
 
-  // userData가 null이 아닌 경우만 처리
   const umbrellaData = userData?.borrowedUmbrellas.map((code) => ({
     code,
     borrowDate: new Date(userData.borrowDates[code]).toLocaleDateString(),
@@ -71,7 +70,7 @@ export default function UserDashboard() {
   return (
     <div className="min-h-screen bg-white flex flex-col">
       <Header />
-      <div className="flex justify-center items-center flex-grow mt-[-90]">
+      <div className="flex justify-center items-center flex-grow pt-8">
         <div className="w-full max-w-3xl">
           <div className="flex items-center mb-6">
             <Image
@@ -82,7 +81,7 @@ export default function UserDashboard() {
               className="rounded-full"
             />
             <div className="ml-4">
-              <h2 className="text-lg font-semibold text-gray-800">{userData?.email}</h2> {/* 이메일로 변경 */}
+              <h2 className="text-lg font-semibold text-gray-800">{userData?.email}</h2>
             </div>
           </div>
           <div className="bg-blue-50 text-blue-700 text-center py-3 rounded-lg mb-6 font-semibold">
